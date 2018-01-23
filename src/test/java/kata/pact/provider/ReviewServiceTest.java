@@ -46,4 +46,18 @@ public class ReviewServiceTest {
                 , giveResponse(objectMapper.writeValueAsString(ratings), "application/json;charset=UTF-8")
         );
     }
+
+    @State("The products in Review service are ready")
+    public void shouldGetProducts(Map<String, Object> params) throws JsonProcessingException {
+        ReviewService reviewService = new ReviewService();
+        final List<Product> ratings = reviewService.getProducts();
+        ObjectMapper objectMapper = new ObjectMapper();
+        //Set pretty printing of json
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        embeddedService.addExpectation(
+                onRequestTo("/products")
+                , giveResponse(objectMapper.writeValueAsString(ratings), "application/json;charset=UTF-8")
+        );
+    }
 }
